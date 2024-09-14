@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laberinto</title>
+
+    <style type="text/css">
+		body{
+			background-color: gray;
+		}
+		canvas{
+			background-color: rgb(250, 246, 246);
+		}
+	</style>
+</head>
+<body>
+    <canvas id="myCanvas" width="900" height="900"></canvas>
+
+	<script type="text/javascript">
+		const myCanvas = document.getElementById("myCanvas"); 
+		const ctx = myCanvas.getContext("2d");
+
+       
+		var walls = [];
+        var score =0;
+        var pause = false;
+        var direction = '';
+        var speed = 5;		
+        let minutes = 2;
+        let seconds = 0;
+
+		const kirb =  new Audio("kirby.mp3")
+
+        const Intro = new Audio("kirby-game.mp3")
+        Intro.loop = true;
+        Intro.controls = true;
+
+        const audio = new Audio("kirby-death.mp3");
+
+        const playerImage = new Image();
+        playerImage.src = 'Kirby.png';
+
+        
+        const targetImage = new Image();
+        targetImage.src = 'estrella.png'; 
+
+		class Rectangulo { 
+
+		 	constructor(color,w,h,x,y,speed) {
+
+		 		this.color = color;
+		    	this.h = h;
+		    	this.w = w;
+		    	this.x = x;
+		    	this.y = y;
+		    	this.speed = speed;
+		 	}  
+
+		 	colision(otro) {
+
+		 		if( 
+		 			this.x < otro.x + otro.w && 
+		 			this.x + this.w > otro.x &&  
+		 			this.y < otro.y + otro.h &&   
+		 			this.y + this.h > otro.y
+		 		){
+		 			return true; 
+		 		}
+
+			    return false;
+			}
+
+		}
+		
+		
+		var player = new Rectangulo("red",50, 30,100,100, 5);
+
+		var target = new Rectangulo("yellow",35,20,100,200, null);
+
+		/*walls.push( new Rectangulo("blue",20,200,50,150));
+        walls.push( new Rectangulo("blue",250,20,250,80));
+        walls.push( new Rectangulo("blue",250,20,150,420));*/
+
+    walls.push(new Rectangulo("blue", 20, 700, 75, 100));//L1
+    walls.push(new Rectangulo("blue", 650, 20, 155, 100));//L2
+    walls.push(new Rectangulo("blue", 650, 20, 75, 800));//L2
+    walls.push(new Rectangulo("blue", 20, 700, 790, 100));//L1
+
+
+		document.addEventListener('keypress',function(e){
+
+			switch(e.keyCode)
+			{
+				case  119:
+					direction = 'up';
+				break;
+
+				case 115:
+					direction = 'down';
+				break;
+
+				case 97:
+					direction = 'left';
+				break;
+
+				case 100:
+					direction = 'right';
+				break;
+
+				case 32:
+				if(pause){
+                            pause=false
+                        } 
+                        else{
+                            pause=true
+                        }  
+
+				break;
+
+			} 
+
+		}) 
+
+		function update(){
+                if(!pause){
+                    switch(direction)
+                {
+                    case 'up':
+                    player.y -= speed;
+                    if(player.y < 0){
+                        player.y = 900;;  
+                        }                   
+                    break;
+                    case 'down':
+                    player.y += speed;
+                        if(player.y > 900){
+                            player.y = 0;;  
+                        }                
+                    break;
+                    case 'left':
+                    player.x -= speed;
+                    if(player.x < 0){
+                        player.x = 900;  
+                        }   
+                    break;
+                    case 'right':
+                    player.x += speed;
+                    if(player.x > 900){
+                        player.x = 0;  
+                        } 
+
+                    break;
+                  
+                }
+				if (player.colision(target)) {
+
+				kirb.play();
+                Intro.play();
+
+				target.x = Math.floor(Math.random() * 600)
+				target.y = Math.floor(Math.random() * 600)
+				score++;
+				}
+                console.log(player.colision(walls))
+
+
+                walls.forEach(function(walls,i,array){
+                    if (player.colision(walls)) {
+
+                    switch(direction)
+                    {
+                        case 'up':
+                            player.y +=speed; 
+                        break;
+                        case 'down':
+                            player.y -=speed;
+                        break;
+                        case 'right':
+                            player.x -=speed;
+                        break;
+                        case 'left':
+                            player.x +=speed;
+                           break;
+                       }
+                    }
+                });
+
+                if (player.colision(walls)) {
+
+                switch(direction)
+                {
+                    case 'up':
+                        player.y +=speed; 
+                    break;
+                    case 'down':
+                        player.y -=speed;
+                    break;
+                    case 'right':
+                        player.x -=speed;
+                    break;
+                    case 'left':
+                        player.x +=speed;
+                       break;
+                   }
+                }
+                }
+
+  
+
+
+            }
+		function paint()
+		
+		{
+			if(pause){
+                    ctx.fillStyle="pink";
+                    ctx.fillRect(0,0,900,900)
+                    ctx.fillStyle="yellow";
+                    ctx.font ="80px Arial";
+                    ctx.fillText("P A U S E:", 100,250)
+                    
+
+                }else{
+                    ctx.fillStyle=" green ";
+                    ctx.fillRect(0,0,900,900)
+                }
+
+            
+
+			ctx.font = "35px Arial"; 
+			ctx.fillStyle="black"; 
+			ctx.fillText("Score: "+score, 80,870);
+
+
+			ctx.font = "40px Arial"; 
+			ctx.fillStyle="black"; 
+			ctx.fillText(" THE GREAT KIRBOX ADVENTURE ",100,40);
+
+            
+			
+            ctx.fillStyle = "blue";
+            ctx.fillRect(110, 100, 20, 20); // Inicio
+
+            ctx.fillStyle = "red";
+            ctx.fillRect(750, 800, 20, 20); // Salida
+
+			//ctx.fillStyle= player.color;
+			//ctx.fillRect(player.x, player.y,player.w, player.h)  
+                  
+            ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
+			
+			/*ctx.fillStyle= target.color;
+			ctx.fillRect(target.x, target.y,target.w, target.h)*/
+
+            ctx.drawImage(targetImage, target.x, target.y, target.w, target.h);
+
+            
+         
+
+			walls.forEach(function(walls,i,array){
+                    ctx.fillStyle=walls.color;
+                    ctx.fillRect(walls.x,walls.y,walls.w,walls.h)
+                    ctx.strokeRect(walls.x,walls.y,walls.w,walls.h) 
+                });
+
+			update()
+			requestAnimationFrame(paint);
+		}
+
+		requestAnimationFrame(paint); 
+
+
+		window.requestAnimationFrame = (function () {
+		    return window.requestAnimationFrame ||
+		        window.webkitRequestAnimationFrame ||
+		        window.mozRequestAnimationFrame ||
+		        function (callback) {
+		            window.setTimeout(callback, 17);
+		        };
+		}());
+
+    </script>
+</body>
+</html>
