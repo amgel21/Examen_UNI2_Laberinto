@@ -90,7 +90,7 @@ walls.push(new Rectangulo("grey", 650, 20, 155, 100)); // Pared horizontal 2
 walls.push(new Rectangulo("grey", 650, 20, 75, 800)); // Pared horizontal 3
 walls.push(new Rectangulo("grey", 20, 700, 790, 100)); // Pared vertical 2
 
-// Paredes internas del laberinto
+
 walls.push(new Rectangulo("grey", 20, 150, 200, 150));
 walls.push(new Rectangulo("grey", 150, 20, 200, 300));
 walls.push(new Rectangulo("grey", 20, 200, 350, 300));
@@ -99,7 +99,7 @@ walls.push(new Rectangulo("grey", 20, 150, 550, 500));
 walls.push(new Rectangulo("grey", 150, 20, 550, 650));
 walls.push(new Rectangulo("grey", 20, 100, 700, 650));
 
-// Paredes adicionales para mayor complejidad
+
 walls.push(new Rectangulo("grey", 20, 100, 100, 200));
 walls.push(new Rectangulo("grey", 100, 20, 150, 250));
 walls.push(new Rectangulo("grey", 20, 150, 300, 200));
@@ -109,7 +109,6 @@ walls.push(new Rectangulo("grey", 100, 20, 450, 450));
 walls.push(new Rectangulo("grey", 20, 150, 500, 500));
 walls.push(new Rectangulo("grey", 150, 20, 550, 550));
 
-// Paredes adicionales para mayor complejidad
 walls.push(new Rectangulo("grey", 300, 20, 500, 400));
 walls.push(new Rectangulo("grey", 300, 20, 500, 200));
 walls.push(new Rectangulo("grey", 300, 20, 80, 600));
@@ -131,20 +130,22 @@ walls.push(new Rectangulo("grey", 150, 20, 250, 450));
 walls.push(new Rectangulo("grey", 20, 100, 100, 500));
 walls.push(new Rectangulo("grey", 100, 20, 150, 550));
 
-walls.push(new Rectangulo("grey", 20, 150, 180, 660)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 150, 20, 80, 350)); // Pared horizontal 3
-walls.push(new Rectangulo("grey", 20, 80, 400, 720)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 20, 80, 330, 720)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 20, 80, 460, 720)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 20, 80, 350, 100)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 20, 80, 600, 520)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 20, 80, 650, 520)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 150, 20, 660, 470)); // Pared horizontal 3
-walls.push(new Rectangulo("grey", 150, 20, 550, 700)); // Pared horizontal 3
-walls.push(new Rectangulo("grey", 20, 80, 250, 100)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 20, 80, 360, 575)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 20, 70, 580, 750)); // Pared vertical 1
-walls.push(new Rectangulo("grey", 20, 95, 450, 515)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 150, 180, 660)); 
+walls.push(new Rectangulo("grey", 150, 20, 80, 350)); 
+walls.push(new Rectangulo("grey", 20, 80, 400, 720)); 
+walls.push(new Rectangulo("grey", 20, 80, 330, 720)); 
+walls.push(new Rectangulo("grey", 20, 80, 460, 720)); 
+walls.push(new Rectangulo("grey", 20, 80, 350, 100)); 
+walls.push(new Rectangulo("grey", 20, 80, 600, 520)); 
+walls.push(new Rectangulo("grey", 20, 80, 650, 520)); 
+walls.push(new Rectangulo("grey", 150, 20, 660, 470)); 
+walls.push(new Rectangulo("grey", 150, 20, 550, 700)); 
+walls.push(new Rectangulo("grey", 20, 80, 250, 100)); 
+walls.push(new Rectangulo("grey", 20, 80, 360, 575)); 
+walls.push(new Rectangulo("grey", 20, 70, 580, 750)); 
+walls.push(new Rectangulo("grey", 20, 95, 450, 515));
+walls.push(new Rectangulo("grey", 20, 150,730, 270)); 
+
 
 
 		document.addEventListener('keypress',function(e){
@@ -218,7 +219,7 @@ walls.push(new Rectangulo("grey", 20, 95, 450, 515)); // Pared vertical 1
         if (!gameOver) {
             timeLeft--;
            
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
             ctx.font = "35px Arial";
             ctx.fillStyle = "black";
             ctx.fillText("Tiempo: " + timeLeft + "s", 80, 830);
@@ -331,7 +332,7 @@ walls.push(new Rectangulo("grey", 20, 95, 450, 515)); // Pared vertical 1
             
             ctx.font = "35px Arial";
             ctx.fillStyle = "black";
-            ctx.fillText("Timer: " + timeLeft, 80, 870);
+            ctx.fillText("Timer: " + timeLeft, 660, 95);
 		
 
 
