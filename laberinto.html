@@ -26,7 +26,8 @@
         var score =0;
         var pause = false;
         var direction = '';
-        var speed = 5;		
+        var speed = 5;	
+        var gameOver = true;	
         let minutes = 2;
         let seconds = 0;
 
@@ -34,7 +35,7 @@
 
         const Intro = new Audio("kirby-game.mp3")
         Intro.loop = true;
-        Intro.controls = true;
+        Intro.play;
 
         const audio = new Audio("kirby-death.mp3");
 
@@ -71,21 +72,77 @@
 			    return false;
 			}
 
+            
 		}
 		
 		
-		var player = new Rectangulo("red",50, 30,100,100, 5);
+		var player = new Rectangulo("red",29, 25,100,100, 5);
 
-		var target = new Rectangulo("yellow",35,20,100,200, null);
+		var target = new Rectangulo("yellow",35,20,750,800, null);
 
-		/*walls.push( new Rectangulo("blue",20,200,50,150));
-        walls.push( new Rectangulo("blue",250,20,250,80));
-        walls.push( new Rectangulo("blue",250,20,150,420));*/
+	
 
-    walls.push(new Rectangulo("blue", 20, 700, 75, 100));//L1
-    walls.push(new Rectangulo("blue", 650, 20, 155, 100));//L2
-    walls.push(new Rectangulo("blue", 650, 20, 75, 800));//L2
-    walls.push(new Rectangulo("blue", 20, 700, 790, 100));//L1
+ // Paredes externas del laberinto
+walls.push(new Rectangulo("grey", 20, 700, 75, 100)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 650, 20, 155, 100)); // Pared horizontal 2
+walls.push(new Rectangulo("grey", 650, 20, 75, 800)); // Pared horizontal 3
+walls.push(new Rectangulo("grey", 20, 700, 790, 100)); // Pared vertical 2
+
+// Paredes internas del laberinto
+walls.push(new Rectangulo("grey", 20, 150, 200, 150));
+walls.push(new Rectangulo("grey", 150, 20, 200, 300));
+walls.push(new Rectangulo("grey", 20, 200, 350, 300));
+walls.push(new Rectangulo("grey", 200, 20, 350, 500));
+walls.push(new Rectangulo("grey", 20, 150, 550, 500));
+walls.push(new Rectangulo("grey", 150, 20, 550, 650));
+walls.push(new Rectangulo("grey", 20, 100, 700, 650));
+
+// Paredes adicionales para mayor complejidad
+walls.push(new Rectangulo("grey", 20, 100, 100, 200));
+walls.push(new Rectangulo("grey", 100, 20, 150, 250));
+walls.push(new Rectangulo("grey", 20, 150, 300, 200));
+walls.push(new Rectangulo("grey", 150, 20, 350, 350));
+walls.push(new Rectangulo("grey", 20, 100, 400, 400));
+walls.push(new Rectangulo("grey", 100, 20, 450, 450));
+walls.push(new Rectangulo("grey", 20, 150, 500, 500));
+walls.push(new Rectangulo("grey", 150, 20, 550, 550));
+
+// Paredes adicionales para mayor complejidad
+walls.push(new Rectangulo("grey", 300, 20, 500, 400));
+walls.push(new Rectangulo("grey", 300, 20, 500, 200));
+walls.push(new Rectangulo("grey", 300, 20, 80, 600));
+walls.push(new Rectangulo("grey", 350, 20, 80, 750));
+walls.push(new Rectangulo("grey", 150, 20, 80, 400));
+walls.push(new Rectangulo("grey", 220, 20, 80, 500));
+walls.push(new Rectangulo("grey", 220, 20, 80, 680));
+walls.push(new Rectangulo("grey", 300, 20, 500, 280));
+walls.push(new Rectangulo("grey", 250, 20, 550, 350));
+
+walls.push(new Rectangulo("grey", 20, 100, 500, 100));
+walls.push(new Rectangulo("grey", 100, 20, 550, 150));
+walls.push(new Rectangulo("grey", 20, 150, 400, 200));
+walls.push(new Rectangulo("grey", 150, 20, 450, 250));
+walls.push(new Rectangulo("grey", 20, 100, 300, 300));
+walls.push(new Rectangulo("grey", 100, 20, 350, 350));
+walls.push(new Rectangulo("grey", 20, 150, 200, 400));
+walls.push(new Rectangulo("grey", 150, 20, 250, 450));
+walls.push(new Rectangulo("grey", 20, 100, 100, 500));
+walls.push(new Rectangulo("grey", 100, 20, 150, 550));
+
+walls.push(new Rectangulo("grey", 20, 150, 180, 660)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 150, 20, 80, 350)); // Pared horizontal 3
+walls.push(new Rectangulo("grey", 20, 80, 400, 720)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 80, 330, 720)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 80, 460, 720)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 80, 350, 100)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 80, 600, 520)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 80, 650, 520)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 150, 20, 660, 470)); // Pared horizontal 3
+walls.push(new Rectangulo("grey", 150, 20, 550, 700)); // Pared horizontal 3
+walls.push(new Rectangulo("grey", 20, 80, 250, 100)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 80, 360, 575)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 70, 580, 750)); // Pared vertical 1
+walls.push(new Rectangulo("grey", 20, 95, 450, 515)); // Pared vertical 1
 
 
 		document.addEventListener('keypress',function(e){
@@ -153,10 +210,15 @@
                     break;
                   
                 }
+                
 				if (player.colision(target)) {
 
 				kirb.play();
                 Intro.play();
+
+                alert("¡Ha llegado al destino!");
+
+                gameOver = true;
 
 				target.x = Math.floor(Math.random() * 600)
 				target.y = Math.floor(Math.random() * 600)
@@ -245,13 +307,9 @@
             ctx.fillStyle = "red";
             ctx.fillRect(750, 800, 20, 20); // Salida
 
-			//ctx.fillStyle= player.color;
-			//ctx.fillRect(player.x, player.y,player.w, player.h)  
+			
                   
             ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
-			
-			/*ctx.fillStyle= target.color;
-			ctx.fillRect(target.x, target.y,target.w, target.h)*/
 
             ctx.drawImage(targetImage, target.x, target.y, target.w, target.h);
 
@@ -270,6 +328,7 @@
 
 		requestAnimationFrame(paint); 
 
+        
 
 		window.requestAnimationFrame = (function () {
 		    return window.requestAnimationFrame ||
